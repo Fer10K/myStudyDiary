@@ -1,0 +1,235 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-fondo: #f4f6fb;
+  --color-tarjeta: #ffffff;
+  --color-texto: #1f2430;
+  --color-suave: #6b7280;
+  --color-acento: #4f6df5;
+  --color-acento-oscuro: #3b55d9;
+  --radio: 14px;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.contenedor {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.cabecera {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.cabecera h1 {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.cabecera p {
+  color: var(--color-suave);
+  font-size: 0.95rem;
+}
+
+.racha {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  justify-items: center;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border: 1px solid #ffd699;
+  border-radius: var(--radio);
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.racha__principal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.racha__numero {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #e8590c;
+  line-height: 1;
+}
+
+.racha__fuego {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.racha__texto {
+  width: 100%;
+  color: #a04b00;
+  font-weight: 600;
+}
+
+/* Mejor racha: en el móvil va debajo, en pantallas anchas al lado. */
+.racha__mejor {
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px dashed #f0bd85;
+}
+
+.racha__mejorNumero {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #c2410c;
+  line-height: 1.2;
+}
+
+.racha__mejorTexto {
+  color: #a04b00;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.tarjeta {
+  background: var(--color-tarjeta);
+  border: 1px solid #e6e8ef;
+  border-radius: var(--radio);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(20, 30, 60, 0.05);
+}
+
+.tarjeta h2 {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+}
+
+.campo {
+  margin-bottom: 14px;
+}
+
+.campo label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.campo input {
+  width: 100%;
+  padding: 11px 12px;
+  font-size: 1rem;
+  border: 1px solid #d3d7e2;
+  border-radius: 10px;
+  background: #fbfcfe;
+  color: var(--color-texto);
+}
+
+.campo input:focus {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 1px;
+  border-color: var(--color-acento);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-acento);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--color-acento-oscuro);
+}
+
+.aviso {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #c92a2a;
+}
+
+.vacio {
+  color: var(--color-suave);
+  font-size: 0.95rem;
+}
+
+.lista {
+  list-style: none;
+}
+
+.lista li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.lista li:last-child {
+  border-bottom: none;
+}
+
+.lista .fecha {
+  font-size: 0.85rem;
+  color: var(--color-suave);
+  display: block;
+}
+
+.lista .tema {
+  font-weight: 600;
+}
+
+.lista .minutos {
+  white-space: nowrap;
+  align-self: center;
+  font-weight: 700;
+  color: var(--color-acento);
+}
+
+@media (max-width: 480px) {
+  .racha__numero {
+    font-size: 2.6rem;
+  }
+
+  .lista li {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .lista .minutos {
+    align-self: flex-start;
+  }
+}
+
+@media (min-width: 520px) {
+  .racha {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .racha__mejor {
+    width: auto;
+    padding: 0 0 0 24px;
+    border-top: none;
+    border-left: 1px solid #f0bd85;
+  }
+}

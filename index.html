@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diario de Estudio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="contenedor">
+    <header class="cabecera">
+      <h1>Diario de Estudio</h1>
+      <p>Registra tus sesiones y mantén tu racha viva.</p>
+    </header>
+
+    <section class="racha" aria-live="polite">
+      <div class="racha__principal">
+        <span class="racha__numero" id="rachaNumero">0</span>
+        <span class="racha__fuego">🔥</span>
+        <p class="racha__texto" id="rachaTexto">días seguidos estudiando</p>
+      </div>
+      <div class="racha__mejor" id="mejorRacha" hidden>
+        <span class="racha__mejorNumero" id="mejorNumero">0</span>
+        <p class="racha__mejorTexto" id="mejorTexto">mejor racha</p>
+      </div>
+    </section>
+
+    <section class="tarjeta">
+      <h2>Nueva sesión</h2>
+      <form id="formulario">
+        <div class="campo">
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" name="fecha" required>
+        </div>
+
+        <div class="campo">
+          <label for="tema">Tema</label>
+          <input type="text" id="tema" name="tema" placeholder="Ej. Álgebra lineal" required>
+        </div>
+
+        <div class="campo">
+          <label for="minutos">Minutos</label>
+          <input type="number" id="minutos" name="minutos" min="1" step="1" placeholder="Ej. 45" required>
+        </div>
+
+        <button type="submit">Guardar sesión</button>
+        <p class="aviso" id="aviso" hidden></p>
+      </form>
+    </section>
+
+    <section class="tarjeta">
+      <h2>Sesiones</h2>
+      <p class="vacio" id="vacio">Todavía no has registrado ninguna sesión.</p>
+      <ul class="lista" id="lista"></ul>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
