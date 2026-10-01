@@ -139,6 +139,41 @@ function calcularMejorRacha(sesiones) {
   return mejor;
 }
 
+// ---------- Total estudiado ----------
+
+// Suma los minutos de las sesiones guardadas.
+// Las fechas futuras no suman, igual que en las rachas.
+function sumarMinutos(sesiones) {
+  var hoy = hoyISO();
+  var total = 0;
+
+  sesiones.forEach(function (s) {
+    if (!esFechaValida(s.fecha)) return;
+    if (s.fecha > hoy) return;
+
+    var minutos = Number(s.minutos);
+    if (!Number.isFinite(minutos) || minutos <= 0) return;
+
+    total += minutos;
+  });
+
+  return total;
+}
+
+// Cambia de unidad: minutos -> horas (al pasar de 60) -> días (al pasar de 24 h).
+function formatearTiempo(minutos) {
+  if (minutos <= 60) return formatearNumero(minutos) + " min";
+  if (minutos <= 24 * 60) return formatearNumero(minutos / 60) + " h";
+
+  var dias = formatearNumero(minutos / (24 * 60));
+  return dias === "1" ? "1 día" : dias + " días";
+}
+
+// Número con coma decimal española y como mucho 1 decimal.
+function formatearNumero(valor) {
+  return valor.toLocaleString("es-ES", { maximumFractionDigits: 1 });
+}
+
 // ---------- Mostrar en pantalla ----------
 
 function pintarRacha(sesiones) {
@@ -166,6 +201,21 @@ function pintarMejorRacha(sesiones) {
   bloque.hidden = false;
   document.getElementById("mejorNumero").textContent = mejor;
   document.getElementById("mejorTexto").textContent = "mejor racha";
+}
+
+function pintarTotal(sesiones) {
+  var bloque = document.getElementById("totalTiempo");
+  var total = sumarMinutos(sesiones);
+
+  // Todavía no hay minutos: no se muestra.
+  if (total === 0) {
+    bloque.hidden = true;
+    return;
+  }
+
+  bloque.hidden = false;
+  document.getElementById("totalNumero").textContent = formatearTiempo(total);
+  document.getElementById("totalTexto").textContent = "total estudiado";
 }
 
 function pintarLista(sesiones) {
@@ -209,6 +259,7 @@ function pintarTodo() {
   var sesiones = leerSesiones();
   pintarRacha(sesiones);
   pintarMejorRacha(sesiones);
+  pintarTotal(sesiones);
   pintarLista(sesiones);
 }
 

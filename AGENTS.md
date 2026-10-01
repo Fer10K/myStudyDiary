@@ -30,6 +30,10 @@ pero ayer sí, la racha sigue viva y se cuenta desde ayer.
   localStorage) y su bloque se oculta mientras no haya ningún día con sesión.
 - Los cortes entre tramos se comprueban con `menosUnDia()`, nunca incrementando fechas
   a mano ni comparando con `Date`.
+- El total estudiado también se recalcula en cada pintado (sin clave aparte): suma los
+  `minutos` numéricos > 0 de las sesiones no futuras (`sumarMinutos`) y cambia de unidad
+  a los 60 min y a las 24 h, con coma decimal (`formatearTiempo`). Su bloque se oculta si
+  el total es 0.
 ## Forma de trabajar
 - Haz solo lo que se pide: no añadas funcionalidades por tu cuenta.
 - Cambios pequeños y enfocados; no reescribas lo que ya funciona.

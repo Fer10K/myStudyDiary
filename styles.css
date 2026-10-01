@@ -83,14 +83,16 @@ body {
   font-weight: 600;
 }
 
-/* Mejor racha: en el móvil va debajo, en pantallas anchas al lado. */
-.racha__mejor {
+/* Mejor racha y total: en el móvil van debajo, en pantallas anchas al lado. */
+.racha__mejor,
+.racha__total {
   width: 100%;
   padding-top: 12px;
   border-top: 1px dashed #f0bd85;
 }
 
-.racha__mejorNumero {
+.racha__mejorNumero,
+.racha__totalNumero {
   display: block;
   font-size: 1.6rem;
   font-weight: 800;
@@ -98,7 +100,8 @@ body {
   line-height: 1.2;
 }
 
-.racha__mejorTexto {
+.racha__mejorTexto,
+.racha__totalTexto {
   color: #a04b00;
   font-size: 0.9rem;
   font-weight: 600;
@@ -222,11 +225,12 @@ button:hover {
 
 @media (min-width: 520px) {
   .racha {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
     align-items: center;
   }
 
-  .racha__mejor {
+  .racha__mejor,
+  .racha__total {
     width: auto;
     padding: 0 0 0 24px;
     border-top: none;
