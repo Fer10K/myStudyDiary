@@ -1,3 +1,8 @@
+/* ============================================================
+   Diario de Estudio — papel de cuaderno cuadriculado:
+   rejilla, tinta azul, subrayador amarillo y margen rojo.
+   ============================================================ */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,93 +10,145 @@
 }
 
 :root {
-  --color-fondo: #f4f6fb;
-  --color-tarjeta: #ffffff;
-  --color-texto: #1f2430;
-  --color-suave: #6b7280;
-  --color-acento: #4f6df5;
-  --color-acento-oscuro: #3b55d9;
-  --radio: 14px;
+  /* Papel y tinta */
+  --papel: #f4f5f9;
+  --rejilla: #e4e8f3;
+  --hoja: #ffffff;
+  --borde: #e2e6f0;
+  --tinta: #1b2440;
+  --tinta-media: #5a6683;
+  --azul: #2a45c7;
+  --azul-oscuro: #1e3399;
+  --subrayador: #ffde3d;
+  --rojo: #c62828;
+
+  /* Tipografía */
+  --serif: Georgia, "Iowan Old Style", Charter, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --radio: 10px;
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  background: var(--color-fondo);
-  color: var(--color-texto);
+  font-family: var(--sans);
+  color: var(--tinta);
   line-height: 1.5;
+  background-color: var(--papel);
+  /* Rejilla del cuaderno: 24 px, muy tenue. */
+  background-image:
+    repeating-linear-gradient(to right, transparent 0 23px, var(--rejilla) 23px 24px),
+    repeating-linear-gradient(to bottom, transparent 0 23px, var(--rejilla) 23px 24px);
   -webkit-font-smoothing: antialiased;
 }
 
-.contenedor {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 24px 16px 48px;
+/* Foco de teclado visible en todo lo interactivo. */
+:where(button, input, a):focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
 }
 
+.contenedor {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 18px 56px;
+}
+
+/* ---------- Cabecera ---------- */
+
 .cabecera {
-  text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .cabecera h1 {
-  font-size: 1.8rem;
-  margin-bottom: 4px;
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 5vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 .cabecera p {
-  color: var(--color-suave);
-  font-size: 0.95rem;
+  margin-top: 6px;
+  max-width: 46ch;
+  color: var(--tinta-media);
+  font-size: 0.98rem;
 }
+
+/* ---------- Hoja de rachas (lo primero que se ve) ---------- */
 
 .racha {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
-  justify-items: center;
-  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-  border: 1px solid #ffd699;
+  gap: 16px;
+  background: var(--hoja);
+  border: 1px solid var(--borde);
   border-radius: var(--radio);
-  padding: 20px;
-  margin-bottom: 20px;
-  text-align: center;
+  padding: 22px;
+  margin-bottom: 22px;
 }
 
 .racha__principal {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  justify-content: center;
-  gap: 6px;
-  width: 100%;
+  gap: 10px;
 }
 
 .racha__numero {
-  font-size: 3rem;
-  font-weight: 800;
-  color: #e8590c;
+  position: relative;
+  z-index: 0;
+  font-family: var(--serif);
+  font-size: clamp(3rem, 12vw, 4rem);
+  font-weight: 700;
   line-height: 1;
+  color: var(--tinta);
+}
+
+/* El subrayador de amarillo: el único gesto llamativo de la página. */
+.racha__numero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -0.2em;
+  right: -0.3em;
+  top: 0.16em;
+  bottom: 0;
+  background: var(--subrayador);
+  transform: skewX(-8deg) rotate(-1deg);
+  transform-origin: left center;
+  animation: subrayar 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) 0.15s both;
+}
+
+@keyframes subrayar {
+  from {
+    transform: skewX(-8deg) rotate(-1deg) scaleX(0);
+  }
+  to {
+    transform: skewX(-8deg) rotate(-1deg) scaleX(1);
+  }
 }
 
 .racha__fuego {
-  font-size: 2.2rem;
+  font-size: 1.9rem;
   line-height: 1;
 }
 
 .racha__texto {
-  width: 100%;
-  color: #a04b00;
+  flex-basis: 100%;
+  color: var(--tinta-media);
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
-/* Bloque variable: en el móvil va debajo, en pantallas anchas al lado. */
+/* ---------- Bloque variable + menú ---------- */
+
 .racha__dato {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
-  width: 100%;
-  padding-top: 12px;
-  border-top: 1px dashed #f0bd85;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--borde);
 }
 
 .racha__datoInfo {
@@ -100,138 +157,170 @@ body {
 
 .racha__datoNumero {
   display: block;
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #c2410c;
-  line-height: 1.2;
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
 }
 
 .racha__datoTexto {
-  color: #a04b00;
-  font-size: 0.9rem;
+  color: var(--tinta-media);
+  font-size: 0.875rem;
   font-weight: 600;
 }
 
-/* Menú hamburguesa para elegir qué dato se muestra. */
 .menu {
   position: relative;
   flex: 0 0 auto;
 }
 
 .menu__boton {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   padding: 0;
-  font-size: 1.3rem;
-  color: #a04b00;
+  font-family: var(--sans);
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--tinta-media);
   background: transparent;
+  border: 1px solid var(--borde);
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .menu__boton:hover {
-  background: rgba(255, 255, 255, 0.7);
+  color: var(--tinta);
+  background: var(--papel);
+  border-color: var(--borde);
 }
 
 .menu__lista {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 8px);
   right: 0;
-  z-index: 10;
-  min-width: 190px;
+  z-index: 20;
+  min-width: 200px;
   padding: 6px;
   list-style: none;
-  background: var(--color-tarjeta);
-  border: 1px solid #e6e8ef;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(20, 30, 60, 0.15);
+  background: var(--hoja);
+  border: 1px solid var(--tinta);
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 rgba(27, 36, 64, 0.12);
 }
 
 .menu__opcion {
   width: 100%;
   padding: 10px 12px;
+  font-family: var(--sans);
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--color-texto);
+  color: var(--tinta);
   background: transparent;
   text-align: left;
-  border-radius: 8px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .menu__opcion:hover {
-  background: #fff3e0;
+  background: var(--subrayador);
 }
 
 .menu__opcion.activo::after {
   content: " ✓";
-  color: #e8590c;
+  color: var(--azul);
 }
 
+/* ---------- Tarjetas ---------- */
+
 .tarjeta {
-  background: var(--color-tarjeta);
-  border: 1px solid #e6e8ef;
+  background: var(--hoja);
+  border: 1px solid var(--borde);
   border-radius: var(--radio);
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(20, 30, 60, 0.05);
+  padding: 22px;
+  margin-bottom: 22px;
 }
 
 .tarjeta h2 {
-  font-size: 1.1rem;
-  margin-bottom: 14px;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
 }
 
+/* ---------- Formulario: se escribe sobre el renglón ---------- */
+
 .campo {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .campo label {
   display: block;
-  font-size: 0.9rem;
+  margin-bottom: 2px;
+  font-size: 0.82rem;
   font-weight: 600;
-  margin-bottom: 6px;
+  color: var(--tinta-media);
 }
 
 .campo input {
   width: 100%;
-  padding: 11px 12px;
+  padding: 8px 2px;
+  font-family: var(--sans);
   font-size: 1rem;
-  border: 1px solid #d3d7e2;
-  border-radius: 10px;
-  background: #fbfcfe;
-  color: var(--color-texto);
+  color: var(--tinta);
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid #c9d0e4;
+  border-radius: 0;
+}
+
+.campo input::placeholder {
+  color: #8891ad;
+}
+
+.campo input:hover {
+  border-bottom-color: var(--tinta-media);
 }
 
 .campo input:focus {
-  outline: 2px solid var(--color-acento);
-  outline-offset: 1px;
-  border-color: var(--color-acento);
+  border-bottom-color: var(--azul);
+  background: rgba(42, 69, 199, 0.05);
 }
 
-button {
+button[type="submit"] {
   width: 100%;
-  padding: 12px;
+  padding: 13px;
+  font-family: var(--sans);
   font-size: 1rem;
   font-weight: 700;
-  color: #fff;
-  background: var(--color-acento);
-  border: none;
-  border-radius: 10px;
+  color: #ffffff;
+  background: var(--azul);
+  border: 0;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
 }
 
-button:hover {
-  background: var(--color-acento-oscuro);
+button[type="submit"]:hover {
+  background: var(--azul-oscuro);
+}
+
+button[type="submit"]:active {
+  transform: translateY(1px);
 }
 
 .aviso {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #c92a2a;
+  margin-top: 12px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--rojo);
 }
 
+/* ---------- Lista de sesiones ---------- */
+
 .vacio {
-  color: var(--color-suave);
-  font-size: 0.95rem;
+  color: var(--tinta-media);
+  font-size: 0.96rem;
 }
 
 .lista {
@@ -241,19 +330,20 @@ button:hover {
 .lista li {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 14px;
   padding: 12px 0;
-  border-bottom: 1px solid #eef0f5;
+  border-bottom: 1px solid var(--borde);
 }
 
 .lista li:last-child {
-  border-bottom: none;
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
 .lista .fecha {
-  font-size: 0.85rem;
-  color: var(--color-suave);
   display: block;
+  font-size: 0.8rem;
+  color: var(--tinta-media);
 }
 
 .lista .tema {
@@ -261,24 +351,19 @@ button:hover {
 }
 
 .lista .minutos {
-  white-space: nowrap;
   align-self: center;
   font-weight: 700;
-  color: var(--color-acento);
+  color: var(--azul);
+  white-space: nowrap;
 }
 
-@media (max-width: 480px) {
-  .racha__numero {
-    font-size: 2.6rem;
-  }
+/* ---------- Responsive ---------- */
 
-  .lista li {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .lista .minutos {
-    align-self: flex-start;
+@media (min-width: 560px) {
+  /* Margen rojo del cuaderno, a la izquierda de la hoja. */
+  .contenedor {
+    padding: 40px 28px 64px 32px;
+    border-left: 2px solid rgba(198, 40, 40, 0.4);
   }
 }
 
@@ -289,9 +374,30 @@ button:hover {
   }
 
   .racha__dato {
-    width: auto;
-    padding: 0 0 0 24px;
-    border-top: none;
-    border-left: 1px solid #f0bd85;
+    padding: 0 0 0 22px;
+    border-top: 0;
+    border-left: 1px solid var(--borde);
+  }
+}
+
+@media (max-width: 480px) {
+  .lista li {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .lista .minutos {
+    align-self: flex-start;
+  }
+}
+
+/* Respeta a quien prefiera menos movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

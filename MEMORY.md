@@ -4,6 +4,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 ## Estado actual
 - v1.3: registrar sesiones (fecha, tema, minutos), racha actual 🔥, bloque variable con
   menú ☰ (mejor racha / tiempo estudiado / días del mes) y lista de sesiones.
+- Rediseño visual con enfoque "cuaderno cuadriculado": papel con rejilla, tinta azul,
+  subrayador amarillo en la racha, margen rojo, números en serif, campos como renglones.
 - localStorage: `diario-estudio-sesiones` (sesiones) y `diario-estudio-dato` (elección del
   bloque variable). Sin backend ni dependencias.
 
@@ -22,6 +24,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
   afecta a registros que ya eran inválidos.
 - Unidad única con decimales y coma española: 60 exacto se queda en min, 1440 exacto en
   h y a partir de 24 h en días. Las fechas futuras no suman en ningún dato.
+- Rediseño: una sola animación (el subrayador al cargar) con `prefers-reduced-motion`,
+  foco de teclado visible con `:focus-visible` y sin fuentes externas (todo offline).
 
 ## Aprendizajes y errores a evitar
 - `AGENTS.md` describía los datos en inglés y el código usa `{ fecha, tema, minutos }`:
@@ -31,6 +35,9 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
   milisegundos y a prueba de cambios de hora.
 - El singular "1 día" se comprueba sobre el valor ya formateado (puede salir "1").
 - Antes de sumar `minutos` guardados: `Number()` + `isFinite(m) && m > 0`.
+- Para revisar el diseño sin navegador conectado: copiar los 3 archivos a /tmp, sembrar
+  `localStorage` ahí y capturar con
+  `firefox-esr -headless -new-instance -profile DIR -window-size 760,1000 -screenshot salida.png file://...`
 
 ## Próximos pasos
 - (vacío por ahora)

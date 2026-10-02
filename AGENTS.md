@@ -15,6 +15,9 @@ mes. Las tres estadísticas están en el código; solo se pinta la elegida.
 - Textos de la interfaz en español.
 - Código simple, nombres descriptivos y comentarios solo donde aporten.
 - Diseño limpio y responsive; cualquier pantalla nueva debe verse bien en el móvil.
+- Aspecto de cuaderno cuadriculado: papel con rejilla, tinta azul, subrayador amarillo y
+  margen rojo. Sin fuentes externas (solo `--serif` y `--sans` del `:root`), sin sombras
+  suaves en tarjetas, todo alineado a la izquierda. Mantén esos tokens al retocar el CSS.
 ## Datos
 - localStorage, clave `diario-estudio-sesiones`: array de `{ fecha: "AAAA-MM-DD", tema,
 minutos }`.
