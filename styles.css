@@ -83,16 +83,22 @@ body {
   font-weight: 600;
 }
 
-/* Mejor racha y total: en el móvil van debajo, en pantallas anchas al lado. */
-.racha__mejor,
-.racha__total {
+/* Bloque variable: en el móvil va debajo, en pantallas anchas al lado. */
+.racha__dato {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
   width: 100%;
   padding-top: 12px;
   border-top: 1px dashed #f0bd85;
 }
 
-.racha__mejorNumero,
-.racha__totalNumero {
+.racha__datoInfo {
+  flex: 1;
+}
+
+.racha__datoNumero {
   display: block;
   font-size: 1.6rem;
   font-weight: 800;
@@ -100,11 +106,64 @@ body {
   line-height: 1.2;
 }
 
-.racha__mejorTexto,
-.racha__totalTexto {
+.racha__datoTexto {
   color: #a04b00;
   font-size: 0.9rem;
   font-weight: 600;
+}
+
+/* Menú hamburguesa para elegir qué dato se muestra. */
+.menu {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.menu__boton {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 1.3rem;
+  color: #a04b00;
+  background: transparent;
+  border-radius: 8px;
+}
+
+.menu__boton:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.menu__lista {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 10;
+  min-width: 190px;
+  padding: 6px;
+  list-style: none;
+  background: var(--color-tarjeta);
+  border: 1px solid #e6e8ef;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(20, 30, 60, 0.15);
+}
+
+.menu__opcion {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-texto);
+  background: transparent;
+  text-align: left;
+  border-radius: 8px;
+}
+
+.menu__opcion:hover {
+  background: #fff3e0;
+}
+
+.menu__opcion.activo::after {
+  content: " ✓";
+  color: #e8590c;
 }
 
 .tarjeta {
@@ -225,12 +284,11 @@ button:hover {
 
 @media (min-width: 520px) {
   .racha {
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr auto;
     align-items: center;
   }
 
-  .racha__mejor,
-  .racha__total {
+  .racha__dato {
     width: auto;
     padding: 0 0 0 24px;
     border-top: none;

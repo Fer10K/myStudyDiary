@@ -4,6 +4,11 @@
 
 var CLAVE = "diario-estudio-sesiones";
 
+// Dato que se muestra en el bloque variable de la tarjeta.
+var CLAVE_DATO = "diario-estudio-dato";
+var DATO_POR_DEFECTO = "mes";
+var DATOS_VALIDOS = ["mes", "mejor", "total"];
+
 // ---------- Utilidades de fecha (siempre fecha local) ----------
 
 // Devuelve "YYYY-MM-DD" de hoy según el reloj local del usuario.
@@ -70,6 +75,25 @@ function leerSesiones() {
 
 function guardarSesiones(sesiones) {
   localStorage.setItem(CLAVE, JSON.stringify(sesiones));
+}
+
+// Qué dato muestra el bloque variable: "mes", "mejor" o "total".
+function leerDatoElegido() {
+  var guardado = null;
+  try {
+    guardado = localStorage.getItem(CLAVE_DATO);
+  } catch (e) {
+    guardado = null;
+  }
+
+  // Si no hay nada o el valor no es de los conocidos, se usa el por defecto.
+  if (DATOS_VALIDOS.indexOf(guardado) === -1) return DATO_POR_DEFECTO;
+  return guardado;
+}
+
+function guardarDatoElegido(dato) {
+  if (DATOS_VALIDOS.indexOf(dato) === -1) return;
+  localStorage.setItem(CLAVE_DATO, dato);
 }
 
 // ---------- Racha ----------
@@ -174,6 +198,22 @@ function formatearNumero(valor) {
   return valor.toLocaleString("es-ES", { maximumFractionDigits: 1 });
 }
 
+// ---------- Días del mes ----------
+
+// Días del mes en curso (el de hoy) con al menos 1 sesión.
+// Solo se compara el texto de la fecha: sin aritmética y sin UTC.
+function calcularDiasEsteMes(sesiones) {
+  var diasConSesion = crearDiasConSesion(sesiones);
+  var mesActual = hoyISO().slice(0, 7); // "2026-10"
+  var total = 0;
+
+  Object.keys(diasConSesion).forEach(function (fecha) {
+    if (fecha.slice(0, 7) === mesActual) total++;
+  });
+
+  return total;
+}
+
 // ---------- Mostrar en pantalla ----------
 
 function pintarRacha(sesiones) {
@@ -188,34 +228,38 @@ function pintarRacha(sesiones) {
   }
 }
 
-function pintarMejorRacha(sesiones) {
-  var bloque = document.getElementById("mejorRacha");
-  var mejor = calcularMejorRacha(sesiones);
+// El bloque variable muestra solo 1 de las 3 estadísticas: la elegida.
+// Se pinta siempre (también con 0) para no quedarse sin menú.
+function pintarDatoVariable(sesiones) {
+  var dato = leerDatoElegido();
+  var valor = "";
+  var etiqueta = "";
 
-  // Todavía no hay ningún día con sesión: no se muestra.
-  if (mejor === 0) {
-    bloque.hidden = true;
-    return;
+  if (dato === "mejor") {
+    valor = String(calcularMejorRacha(sesiones));
+    etiqueta = "mejor racha";
+  } else if (dato === "total") {
+    valor = formatearTiempo(sumarMinutos(sesiones));
+    etiqueta = "total estudiado";
+  } else {
+    valor = String(calcularDiasEsteMes(sesiones));
+    etiqueta = "días este mes";
   }
 
-  bloque.hidden = false;
-  document.getElementById("mejorNumero").textContent = mejor;
-  document.getElementById("mejorTexto").textContent = "mejor racha";
+  document.getElementById("datoNumero").textContent = valor;
+  document.getElementById("datoTexto").textContent = etiqueta;
 }
 
-function pintarTotal(sesiones) {
-  var bloque = document.getElementById("totalTiempo");
-  var total = sumarMinutos(sesiones);
+// Marca con ✓ la opción del menú que se está mostrando.
+function pintarOpcionActiva() {
+  var elegido = leerDatoElegido();
+  var opciones = document.querySelectorAll("#menuDato [data-dato]");
 
-  // Todavía no hay minutos: no se muestra.
-  if (total === 0) {
-    bloque.hidden = true;
-    return;
+  for (var i = 0; i < opciones.length; i++) {
+    var activo = opciones[i].getAttribute("data-dato") === elegido;
+    opciones[i].classList.toggle("activo", activo);
+    opciones[i].setAttribute("aria-checked", activo ? "true" : "false");
   }
-
-  bloque.hidden = false;
-  document.getElementById("totalNumero").textContent = formatearTiempo(total);
-  document.getElementById("totalTexto").textContent = "total estudiado";
 }
 
 function pintarLista(sesiones) {
@@ -258,10 +302,58 @@ function pintarLista(sesiones) {
 function pintarTodo() {
   var sesiones = leerSesiones();
   pintarRacha(sesiones);
-  pintarMejorRacha(sesiones);
-  pintarTotal(sesiones);
+  pintarDatoVariable(sesiones);
+  pintarOpcionActiva();
   pintarLista(sesiones);
 }
+
+// ---------- Menú del bloque variable ----------
+
+var botonMenu = document.getElementById("botonMenu");
+var menuDato = document.getElementById("menuDato");
+
+function abrirMenu() {
+  menuDato.hidden = false;
+  botonMenu.setAttribute("aria-expanded", "true");
+}
+
+function cerrarMenu() {
+  menuDato.hidden = true;
+  botonMenu.setAttribute("aria-expanded", "false");
+}
+
+// El botón ☰ abre y cierra el menú.
+botonMenu.addEventListener("click", function (evento) {
+  evento.stopPropagation();
+  if (menuDato.hidden) {
+    abrirMenu();
+  } else {
+    cerrarMenu();
+  }
+});
+
+// Al elegir una opción se guarda y se vuelve a pintar.
+menuDato.addEventListener("click", function (evento) {
+  var opcion = evento.target.closest("[data-dato]");
+  if (!opcion) return;
+
+  guardarDatoElegido(opcion.getAttribute("data-dato"));
+  cerrarMenu();
+  pintarTodo();
+});
+
+// El menú también se cierra al pulsar fuera.
+document.addEventListener("click", function (evento) {
+  if (menuDato.hidden) return;
+  if (menuDato.contains(evento.target)) return;
+  if (botonMenu.contains(evento.target)) return;
+  cerrarMenu();
+});
+
+// Y con la tecla Esc.
+document.addEventListener("keydown", function (evento) {
+  if (evento.key === "Escape") cerrarMenu();
+});
 
 // ---------- Formulario ----------
 

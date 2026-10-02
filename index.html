@@ -19,13 +19,27 @@
         <span class="racha__fuego">🔥</span>
         <p class="racha__texto" id="rachaTexto">días seguidos estudiando</p>
       </div>
-      <div class="racha__mejor" id="mejorRacha" hidden>
-        <span class="racha__mejorNumero" id="mejorNumero">0</span>
-        <p class="racha__mejorTexto" id="mejorTexto">mejor racha</p>
-      </div>
-      <div class="racha__total" id="totalTiempo" hidden>
-        <span class="racha__totalNumero" id="totalNumero">0 min</span>
-        <p class="racha__totalTexto" id="totalTexto">total estudiado</p>
+      <div class="racha__dato" id="datoVariable">
+        <div class="racha__datoInfo">
+          <span class="racha__datoNumero" id="datoNumero">0</span>
+          <p class="racha__datoTexto" id="datoTexto">días este mes</p>
+        </div>
+        <div class="menu">
+          <button type="button" class="menu__boton" id="botonMenu"
+                  aria-label="Elegir qué dato mostrar" aria-haspopup="true"
+                  aria-expanded="false">☰</button>
+          <ul class="menu__lista" id="menuDato" hidden>
+            <li>
+              <button type="button" class="menu__opcion" data-dato="mejor">Mejor racha</button>
+            </li>
+            <li>
+              <button type="button" class="menu__opcion" data-dato="total">Tiempo estudiado</button>
+            </li>
+            <li>
+              <button type="button" class="menu__opcion" data-dato="mes">Días del mes</button>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
