@@ -13,7 +13,7 @@ Web estática para registrar sesiones de estudio y motivarse viendo la racha de 
 - Textos de la interfaz en español.
 - Código simple, nombres descriptivos y comentarios solo donde aporten.
 - Diseño limpio y responsive; cualquier pantalla nueva debe verse bien en el móvil.
-- Aspecto de cuaderno cuadriculado: papel con rejilla, tinta azul, subrayador amarillo y margen rojo. Sin fuentes externas (solo `--serif` y `--sans` del `:root`), sin sombras suaves en tarjetas, todo alineado a la izquierda Mantén esos tokens al retocar el CSS.
+- Aspecto de cuaderno cuadriculado: papel con rejilla, tinta azul, subrayador amarillo y margen rojo. Sin fuentes externas (solo `--serif` y `--sans` del `:root`), sin sombras suaves en tarjetas, todo alineado a la izquierda. Mantén esos tokens al retocar el CSS.
 
 ## Datos
 - localStorage, clave `diario-estudio-sesiones`: array de `{ fecha: "AAAA-MM-DD", tema, minutos }`.
@@ -56,5 +56,5 @@ Web estática para registrar sesiones de estudio y motivarse viendo la racha de 
 - 🚫 Nunca: añadir dependencias, frameworks o un paso de build.
 
 ## Verificación
-- Después de cada cambio, verifica la lógica con `node --test`; la interfaz con el MCP de FireFox DevTools: abre `index.html` prueba la funcionalidad, revisa la consola y comprueba la vista móvil y complementa la revision de la interfaz con la skill web-design-guidelines.
+- Después de cada cambio, verifica la lógica con `node --test`; la interfaz con el MCP de FireFox DevTools: abre `index.html` en una nueva pestaña de FireFox, prueba la funcionalidad, revisa la consola y comprueba la vista en móvil y web (que todo se puede visualizar) y complementa la revision de la interfaz con la skill web-design-guidelines.
 - Para empezar de cero: DevTools → Application → Local Storage → borrar las claves `diario-estudio-sesiones`      (sesiones) y `diario-estudio-dato` (dato elegido).
