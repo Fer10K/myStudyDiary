@@ -357,6 +357,230 @@ button[type="submit"]:active {
   white-space: nowrap;
 }
 
+/* ---------- Franja de aviso de día nuevo (RF-14) ---------- */
+
+.avisoDia {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 12px 14px;
+  background: var(--subrayador);
+  border: 1px solid var(--tinta);
+  border-radius: var(--radio);
+}
+
+/* Necesario: el display flex de arriba ganaría al atributo hidden. */
+.avisoDia[hidden] {
+  display: none;
+}
+
+.avisoDia__texto {
+  flex: 1 1 240px;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.avisoDia__cerrar {
+  padding: 8px 16px;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--hoja);
+  background: var(--tinta);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.avisoDia__cerrar:hover {
+  background: var(--azul-oscuro);
+}
+
+/* Solo lectores de pantalla: el orden visual del RF-12 empieza en la
+   fila del rango. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Tarjeta del mapa de calor ---------- */
+
+.mapa__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.mapa__rango {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.mapa__controles {
+  display: flex;
+  gap: 8px;
+}
+
+.mapa__boton {
+  min-width: 42px;
+  height: 42px;
+  padding: 0 10px;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--tinta);
+  background: var(--hoja);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  cursor: pointer;
+  /* Sin retardo de zoom por doble toque: ◀ y ▶ se pulsan seguidos. */
+  touch-action: manipulation;
+}
+
+.mapa__boton:hover {
+  background: var(--papel);
+  border-color: var(--tinta);
+}
+
+.mapa__boton--texto {
+  padding: 0 14px;
+  font-size: 0.92rem;
+}
+
+/* RF-1: 8 columnas × 7 filas. El orden del DOM es cronológico y el
+   flujo de columnas deja el primer día arriba a la izquierda y el
+   último (hoy) abajo a la derecha. */
+.mapa__cuadricula {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.mapa__celda {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: 3px;
+}
+
+/* RF-5: la marca de hoy se dibuja por fuera de la celda, así se ve
+   igual con color o sin él. */
+.mapa__celda--hoy {
+  outline: 2px solid var(--tinta);
+  outline-offset: 1px;
+}
+
+/* RF-6: el mes solo aparece cuando cambia respecto a la columna anterior. */
+.mapa__meses {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 2px;
+  margin-top: 6px;
+}
+
+.mapa__mes {
+  font-family: var(--serif);
+  font-size: 0.75rem;
+  color: var(--tinta-media);
+}
+
+/* RF-8: la línea ocupa su sitio aunque esté vacía, para que la
+   tarjeta no salte al pasar el ratón. */
+.mapa__detalle {
+  min-height: 1.5em;
+  margin-top: 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+/* RF-9: la leyenda vive en el HTML y no depende de JavaScript. */
+.mapa__leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 10px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.82rem;
+  color: var(--tinta-media);
+}
+
+.mapa__leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mapa__muestra {
+  width: 16px;
+  height: 16px;
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: 3px;
+}
+
+/* RF-4: los cuatro tonos de tinta azul, del claro al oscuro. Van al
+   final para que pinten sobre el fondo de papel de celda y muestra. */
+.nivel-1 {
+  background: #c7d2f7;
+}
+
+.nivel-2 {
+  background: #7e95ee;
+}
+
+.nivel-3 {
+  background: #3d5ae0;
+}
+
+.nivel-4 {
+  background: #1b2a9e;
+}
+
+/* RF-15: el resumen cierra la tarjeta con una línea. */
+.mapa__resumen {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--borde);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+@media (min-width: 481px) {
+  .mapa__cuadricula,
+  .mapa__meses {
+    gap: 4px;
+  }
+}
+
+/* RNF-2: a 320 px cada celda debe medir ≥ 28 px con ≥ 2 px de hueco.
+   Con 16 px de relleno lateral la celda queda en 29,5 px. */
+@media (max-width: 480px) {
+  .tarjeta--mapa {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
 /* ---------- Responsive ---------- */
 
 @media (min-width: 560px) {

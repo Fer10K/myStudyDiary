@@ -9,6 +9,12 @@
 </head>
 <body>
   <main class="contenedor">
+    <!-- RF-14: franja arriba de todo, sobre el formulario. -->
+    <div class="avisoDia" id="avisoDia" role="status" hidden>
+      <p class="avisoDia__texto">Un nuevo día comienza: recarga la página para actualizar los datos</p>
+      <button type="button" class="avisoDia__cerrar" id="avisoDiaCerrar">Cerrar</button>
+    </div>
+
     <header class="cabecera">
       <h1>Diario de Estudio</h1>
       <p>Registra tus sesiones y mantén tu racha viva.</p>
@@ -65,6 +71,42 @@
         <button type="submit">Guardar sesión</button>
         <p class="aviso" id="aviso" hidden></p>
       </form>
+    </section>
+
+    <!-- RF-12: tarjeta propia del mapa, entre el formulario y la lista.
+         Orden interno: (1) rango + controles, (2) cuadrícula,
+         (3) detalle → leyenda → resumen. -->
+    <section class="tarjeta tarjeta--mapa" aria-labelledby="mapaTitulo">
+      <h2 class="visually-hidden" id="mapaTitulo">Mapa de calor</h2>
+
+      <div class="mapa__cabecera">
+        <p class="mapa__rango" id="mapaRango"></p>
+        <div class="mapa__controles">
+          <button type="button" class="mapa__boton" id="mapaAnterior"
+                  aria-label="Periodo anterior">◀</button>
+          <button type="button" class="mapa__boton" id="mapaSiguiente"
+                  aria-label="Periodo siguiente" hidden>▶</button>
+          <button type="button" class="mapa__boton mapa__boton--texto"
+                  id="mapaHoy" hidden>Volver a hoy</button>
+        </div>
+      </div>
+
+      <!-- RF-1: 8 columnas × 7 filas en orden cronológico. -->
+      <div class="mapa__cuadricula" id="mapaCuadricula" role="img" aria-label="Mapa de calor"></div>
+      <div class="mapa__meses" id="mapaMeses" aria-hidden="true"></div>
+
+      <p class="mapa__detalle" id="mapaDetalle"></p>
+
+      <!-- RF-9: la leyenda no depende de JavaScript. -->
+      <ul class="mapa__leyenda">
+        <li><span class="mapa__muestra nivel-0"></span> sin sesión</li>
+        <li><span class="mapa__muestra nivel-1"></span> 1-14</li>
+        <li><span class="mapa__muestra nivel-2"></span> 15-44</li>
+        <li><span class="mapa__muestra nivel-3"></span> 45-89</li>
+        <li><span class="mapa__muestra nivel-4"></span> 90+</li>
+      </ul>
+
+      <p class="mapa__resumen" id="mapaResumen" aria-live="polite"></p>
     </section>
 
     <section class="tarjeta">
