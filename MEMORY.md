@@ -29,6 +29,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Al ocultarse el botón `◀` (llegar al límite), el foco de teclado cae en `<body>`; no lo pide la spec, pero conviene revisarlo.
 
 ## Próximos pasos
+- **Agentes SDD** en `.opencode/agents/` (coordinator=primary; planner/implementer/reviewer=subagent) y comandos `/sdd-*` ya apuntando a ellos (oct 26, sin commitear). Si al invocar a `@planner` sale "cannot run as a subagent": OpenCode cargó los agentes al arrancar y estos ficheros son posteriores → **reiniciar la sesión**.
 - Pendiente del usuario: revisar el resultado, commit de `index.html`, `styles.css`, `app.js`, `MEMORY.md` y `specs/001-heat-map/tasks.md`.
 - Sin responder de T1: (1) reloj fijo `hoy = "2026-10-03"` en los tests, (2) helper `disparar()` dejado por adelantado para RF-11/RF-14.
 - Si algo se vuelve regla permanente, proponer moverlo a `AGENTS.md` (p. ej. las 3 variables del mapa y `datosDelMapa`).
